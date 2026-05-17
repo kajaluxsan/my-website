@@ -1,40 +1,46 @@
-import { profile } from "@/data/profile";
+"use client";
 
-const items = [
-  {
-    label: "Email",
-    value: profile.contact.email,
-    href: `mailto:${profile.contact.email}`,
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-      </svg>
-    ),
-  },
-  {
-    label: "Telefon",
-    value: profile.contact.phone,
-    href: `tel:${profile.contact.phone.replace(/\s/g, "")}`,
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
-      </svg>
-    ),
-  },
-  {
-    label: "Standort",
-    value: profile.contact.location,
-    href: "https://maps.google.com/?q=Schlieackerstrasse+10,+8422+Pfungen",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-      </svg>
-    ),
-  },
-];
+import { profile } from "@/data/profile";
+import { useLang } from "@/i18n/LanguageProvider";
+import { ui } from "@/i18n/translations";
 
 export default function Contact() {
+  const { lang } = useLang();
+
+  const items = [
+    {
+      label: ui.contact.email[lang],
+      value: profile.contact.email,
+      href: `mailto:${profile.contact.email}`,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+        </svg>
+      ),
+    },
+    {
+      label: ui.contact.phone[lang],
+      value: profile.contact.phone,
+      href: `tel:${profile.contact.phone.replace(/\s/g, "")}`,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+        </svg>
+      ),
+    },
+    {
+      label: ui.contact.location[lang],
+      value: profile.contact.address,
+      href: "https://maps.google.com/?q=Schlieackerstrasse+10,+8422+Pfungen",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+        </svg>
+      ),
+    },
+  ];
+
   return (
     <section id="contact" className="relative py-20 sm:py-28">
       <div
@@ -44,14 +50,13 @@ export default function Contact() {
 
       <div className="container-narrow text-center">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent-light">
-          Get in touch
+          {ui.contact.eyebrow[lang]}
         </p>
         <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">
-          Lass uns reden.
+          {ui.contact.title[lang]}
         </h2>
         <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/65 sm:text-lg">
-          Du arbeitest an einem spannenden Projekt im Bereich AI, RAG oder
-          Backend? Schreib mir – ich freue mich auf dein Anliegen.
+          {ui.contact.description[lang]}
         </p>
 
         <div className="mt-12 grid gap-4 sm:grid-cols-3">
@@ -81,7 +86,7 @@ export default function Contact() {
             href={`mailto:${profile.contact.email}`}
             className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-4 text-base font-medium text-white shadow-lg shadow-accent/30 transition-all hover:bg-accent-light hover:shadow-xl hover:shadow-accent/40"
           >
-            E-Mail senden
+            {ui.contact.sendEmail[lang]}
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-4 w-4">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>

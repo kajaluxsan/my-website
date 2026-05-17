@@ -1,5 +1,9 @@
+"use client";
+
 import SectionHeading from "./SectionHeading";
 import { achievements } from "@/data/profile";
+import { useLang } from "@/i18n/LanguageProvider";
+import { ui } from "@/i18n/translations";
 
 const icons = [
   <svg key="db" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
@@ -14,29 +18,31 @@ const icons = [
 ];
 
 export default function Achievements() {
+  const { lang } = useLang();
+
   return (
     <section id="achievements" className="py-20 sm:py-28">
       <div className="container-wide">
         <SectionHeading
-          eyebrow="Key Achievements"
-          title="Was ich geliefert habe"
-          description="Konkrete Resultate aus den letzten Projekten – von der Datenbankmigration bis zur AI-Evaluation."
+          eyebrow={ui.achievements.eyebrow[lang]}
+          title={ui.achievements.title[lang]}
+          description={ui.achievements.description[lang]}
         />
 
         <div className="grid gap-5 md:grid-cols-3">
           {achievements.map((a, i) => (
             <article
-              key={a.title}
+              key={a.title[lang]}
               className="surface surface-hover group p-6"
             >
               <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/15 text-accent-light transition-transform group-hover:scale-110">
                 {icons[i % icons.length]}
               </div>
               <h3 className="mb-3 text-lg font-semibold text-white">
-                {a.title}
+                {a.title[lang]}
               </h3>
               <p className="text-sm leading-relaxed text-white/65">
-                {a.description}
+                {a.description[lang]}
               </p>
             </article>
           ))}
