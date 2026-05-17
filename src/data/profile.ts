@@ -59,9 +59,11 @@ export const profile = {
     de: "Software Engineer mit Fokus auf KI, RAG-Systeme und Backend-Entwicklung. Ich studiere Informatik an der ZHAW und arbeite parallel bei LogObject AG an Software für Schweizer Gerichte. Meine Leidenschaft gilt dem Bau skalierbarer Systeme, die echten Mehrwert schaffen – von Datenbankmigrationen bis hin zu produktionsreifen RAG-Pipelines.",
     en: "Software engineer focused on AI, RAG systems and backend development. I study computer science at ZHAW and work in parallel at LogObject AG on software for Swiss courts. My passion is building scalable systems that deliver real value – from database migrations to production-ready RAG pipelines.",
   } satisfies L,
-  // Datei ablegen unter: public/images/profile.png
+  // Datei ablegen unter: public/images/profile.png (Original).
+  // Optimierte WebP-Varianten werden für die Auslieferung verwendet.
   // Setze auf null, um stattdessen das KM-Monogramm anzuzeigen.
-  image: "/images/profile.png" as string | null,
+  image: "/images/profile.webp" as string | null,
+  avatarImage: "/images/profile-avatar.webp" as string | null,
   contact: {
     email: "kajaluxan@mathitharan.ch",
     phone: "+41 77 467 01 32",

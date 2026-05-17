@@ -34,8 +34,8 @@ export default function Hero() {
             {ui.hero.available[lang]}
           </div>
 
-          <h1 className="text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-            <span className="text-gradient">{profile.name}</span>
+          <h1 className="text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-white">
+            {profile.name}
           </h1>
 
           <p className="mt-5 text-lg font-medium text-accent-light sm:text-xl">
@@ -83,7 +83,7 @@ export default function Hero() {
         </div>
 
         <div className="flex justify-center lg:justify-end">
-          <div className="relative animate-float">
+          <div className="relative">
             <div
               aria-hidden
               className="absolute -inset-6 rounded-full bg-gradient-to-tr from-accent/40 via-brand-400/30 to-transparent opacity-70 blur-2xl"

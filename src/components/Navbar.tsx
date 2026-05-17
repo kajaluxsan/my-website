@@ -50,12 +50,12 @@ export default function Navbar() {
               <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-700 to-brand-900 text-[10px] font-bold text-white/90">
                 KM
               </span>
-              {profile.image && (
+              {profile.avatarImage && (
                 <Image
-                  src={profile.image}
+                  src={profile.avatarImage}
                   alt={profile.name}
                   fill
-                  sizes="36px"
+                  sizes="40px"
                   className="relative object-cover"
                   priority
                 />
