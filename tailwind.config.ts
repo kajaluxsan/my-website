@@ -10,22 +10,22 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          DEFAULT: "#0f1f3d",
-          50: "#eef2f9",
-          100: "#d7dff0",
-          200: "#aebee0",
-          300: "#7e96c8",
-          400: "#506fae",
-          500: "#324f8e",
-          600: "#243d70",
-          700: "#1a2e57",
-          800: "#122042",
-          900: "#0f1f3d",
-          950: "#070f22",
+          DEFAULT: "#0d0719",
+          50: "#f5f0ff",
+          100: "#ebdfff",
+          200: "#d6bdff",
+          300: "#bb8dff",
+          400: "#9a5cff",
+          500: "#7d31f5",
+          600: "#691ce0",
+          700: "#5515bc",
+          800: "#451299",
+          900: "#280f5e",
+          950: "#0d0719",
         },
         accent: {
-          DEFAULT: "#5b8def",
-          light: "#7fa6f5",
+          DEFAULT: "#a855f7",
+          light: "#c084fc",
         },
       },
       fontFamily: {
@@ -34,7 +34,8 @@ const config: Config = {
       },
       animation: {
         "fade-in-up": "fadeInUp 0.6s ease-out forwards",
-        "fade-in": "fadeIn 0.8s ease-out forwards",
+        "fade-in": "fadeIn 0.25s ease-out forwards",
+        "scale-in": "scaleIn 0.2s ease-out forwards",
         "float": "float 6s ease-in-out infinite",
         "gradient": "gradient 8s linear infinite",
       },
@@ -46,6 +47,10 @@ const config: Config = {
         fadeIn: {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
+        },
+        scaleIn: {
+          "0%": { opacity: "0", transform: "scale(0.95)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
         },
         float: {
           "0%, 100%": { transform: "translateY(0)" },
