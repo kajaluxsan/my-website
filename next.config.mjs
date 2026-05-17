@@ -2,11 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    // The site only uses 2 hand-optimised WebP files (20 KB + 1.4 KB).
+    // Skipping /_next/image avoids a serverless cold start on the
+    // Vercel Hobby tier — files are served directly from the CDN.
+    unoptimized: true,
     formats: ["image/avif", "image/webp"],
-    // Caches the optimised image variants for 30 days at the edge.
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
-  // Smaller production bundles and faster repeat navigations.
   compress: true,
 };
 
