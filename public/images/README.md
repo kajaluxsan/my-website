@@ -1,33 +1,30 @@
 # public/images
 
-Hier kommt dein **Profilbild** rein.
+**Profilbilder werden hier ausgeliefert.**
 
-## So gehts
+| Datei | Verwendung | Größe |
+|---|---|---|
+| `profile.webp` | Hero & Profil-Popup | ~20 KB |
+| `profile-avatar.webp` | Navbar-Avatar | ~1.4 KB |
 
-1. Speichere dein Bild als **`profile.png`** (genauer Dateiname, alles klein).
-2. Lege es **direkt in diesen Ordner** (`public/images/profile.png`).
-3. Browser-Tab neu laden – das Bild erscheint im Hero.
+Das Original-PNG liegt unter `../assets/profile-original.png` (nicht im Deploy).
 
-## Testen
+## Neues Bild hinzufügen
 
-Im Browser öffnen: <http://localhost:3000/images/profile.png>
-→ wenn dort dein Bild angezeigt wird, ist es korrekt platziert.
+1. Neues Original als `assets/profile-original.png` ablegen.
+2. Optimierte WebP-Varianten generieren:
 
-## Andere Dateiendungen
-
-Wenn du `.png`, `.webp` o. ä. benutzt, ändere in
-`src/data/profile.ts`:
-
-```ts
-image: "/images/profile.png"
+```bash
+node -e "
+const sharp = require('sharp');
+const src = 'assets/profile-original.png';
+(async () => {
+  await sharp(src).resize(720, 720, { fit: 'cover' }).webp({ quality: 88 })
+    .toFile('public/images/profile.webp');
+  await sharp(src).resize(96, 96, { fit: 'cover' }).webp({ quality: 85 })
+    .toFile('public/images/profile-avatar.webp');
+})();
+"
 ```
 
-## Bild komplett deaktivieren
-
-In `src/data/profile.ts`:
-
-```ts
-image: null
-```
-
-→ es wird stattdessen das KM-Monogramm angezeigt.
+(Vorher `npm install --no-save sharp`.)
