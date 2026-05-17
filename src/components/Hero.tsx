@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { profile } from "@/data/profile";
 import { useLang } from "@/i18n/LanguageProvider";
 import { ui } from "@/i18n/translations";
@@ -88,9 +89,19 @@ export default function Hero() {
               className="absolute -inset-6 rounded-full bg-gradient-to-tr from-accent/40 via-brand-400/30 to-transparent opacity-70 blur-2xl"
             />
             <div className="relative h-56 w-56 overflow-hidden rounded-full border-2 border-white/10 bg-gradient-to-br from-brand-700 to-brand-900 shadow-2xl sm:h-72 sm:w-72">
-              <div className="flex h-full w-full items-center justify-center text-7xl font-bold text-white/90 sm:text-8xl">
+              <div className="absolute inset-0 flex items-center justify-center text-7xl font-bold text-white/90 sm:text-8xl">
                 KM
               </div>
+              {profile.image && (
+                <Image
+                  src={profile.image}
+                  alt={profile.name}
+                  fill
+                  priority
+                  sizes="(min-width: 640px) 18rem, 14rem"
+                  className="relative object-cover"
+                />
+              )}
             </div>
           </div>
         </div>
