@@ -149,4 +149,10 @@ export const ui = {
   langSwitch: {
     label: { de: "Sprache wechseln", en: "Switch language" } satisfies L,
   },
+  profileCard: {
+    openLabel: { de: "Profil öffnen", en: "Open profile" } satisfies L,
+    close: { de: "Schliessen", en: "Close" } satisfies L,
+    contact: { de: "Kontakt", en: "Contact" } satisfies L,
+    sendEmail: { de: "E-Mail senden", en: "Send email" } satisfies L,
+  },
 } as const;
