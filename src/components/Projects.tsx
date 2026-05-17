@@ -1,7 +1,13 @@
+"use client";
+
 import SectionHeading from "./SectionHeading";
 import { projects } from "@/data/profile";
+import { useLang } from "@/i18n/LanguageProvider";
+import { ui } from "@/i18n/translations";
 
 export default function Projects() {
+  const { lang } = useLang();
+
   return (
     <section id="projects" className="relative py-20 sm:py-28">
       <div
@@ -11,9 +17,9 @@ export default function Projects() {
 
       <div className="container-wide">
         <SectionHeading
-          eyebrow="Selected Projects"
-          title="Projekte & Forschung"
-          description="Ausgewählte Arbeiten im Bereich RAG, LLMs und Backend-Engineering."
+          eyebrow={ui.projects.eyebrow[lang]}
+          title={ui.projects.title[lang]}
+          description={ui.projects.description[lang]}
         />
 
         <div className="grid gap-6">
@@ -35,41 +41,41 @@ export default function Projects() {
                   </time>
                 </div>
 
-                  <p className="mb-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                    {p.description}
-                  </p>
+                <p className="mb-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                  {p.description[lang]}
+                </p>
 
-                  {p.highlights.length > 0 && (
-                    <ul className="mb-5 space-y-2">
-                      {p.highlights.map((h, i) => (
-                        <li
-                          key={i}
-                          className="flex gap-3 text-sm leading-relaxed text-white/65"
+                {p.highlights[lang].length > 0 && (
+                  <ul className="mb-5 space-y-2">
+                    {p.highlights[lang].map((h, i) => (
+                      <li
+                        key={i}
+                        className="flex gap-3 text-sm leading-relaxed text-white/65"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="mt-1 h-4 w-4 shrink-0 text-accent"
+                          aria-hidden
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="mt-1 h-4 w-4 shrink-0 text-accent"
-                            aria-hidden
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          <span>{h}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                          <path
+                            fillRule="evenodd"
+                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
-                  {p.metric && (
-                    <div className="mb-5 inline-block rounded-lg border border-accent/30 bg-accent/10 px-3 py-2 font-mono text-xs text-accent-light sm:text-sm">
-                      {p.metric}
-                    </div>
-                  )}
+                {p.metric && (
+                  <div className="mb-5 inline-block rounded-lg border border-accent/30 bg-accent/10 px-3 py-2 font-mono text-xs text-accent-light sm:text-sm">
+                    {p.metric}
+                  </div>
+                )}
 
                 <div className="flex flex-wrap gap-2">
                   {p.tech.map((t) => (
