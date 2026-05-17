@@ -33,9 +33,9 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-200 ${
           scrolled
-            ? "border-b border-white/10 bg-brand-950/80 backdrop-blur-md"
+            ? "border-b border-white/10 bg-brand-950/95"
             : "bg-transparent"
         }`}
       >
@@ -122,7 +122,7 @@ export default function Navbar() {
         </nav>
 
         {open && (
-          <div className="border-t border-white/10 bg-brand-950/95 backdrop-blur-md lg:hidden">
+          <div className="border-t border-white/10 bg-brand-950 lg:hidden">
             <ul className="container-wide flex flex-col gap-1 py-4">
               {navItems.map((item) => (
                 <li key={item.href}>
