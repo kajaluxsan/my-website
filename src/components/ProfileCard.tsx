@@ -111,11 +111,11 @@ export default function ProfileCard({ open, onClose }: Props) {
     >
       <div
         aria-hidden
-        className="absolute inset-0 bg-brand-950/85 backdrop-blur-md"
+        className="absolute inset-0 bg-brand-950/95"
       />
 
       <div
-        className="relative w-full max-w-sm overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-brand-900/95 to-brand-950/95 p-6 shadow-2xl shadow-accent/20 backdrop-blur-md animate-scale-in"
+        className="relative w-full max-w-sm overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-brand-900 to-brand-950 p-6 shadow-2xl shadow-accent/20 animate-scale-in"
         onClick={(e) => e.stopPropagation()}
       >
         <div

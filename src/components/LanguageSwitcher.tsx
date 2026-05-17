@@ -14,7 +14,7 @@ export default function LanguageSwitcher({ className = "" }: Props) {
     <div
       role="group"
       aria-label={ui.langSwitch.label[lang]}
-      className={`inline-flex items-center rounded-full border border-white/15 bg-white/[0.03] p-0.5 text-xs font-semibold backdrop-blur-sm ${className}`}
+      className={`inline-flex items-center rounded-full border border-white/15 bg-brand-900/60 p-0.5 text-xs font-semibold ${className}`}
     >
       <button
         type="button"

@@ -26,7 +26,7 @@ export default function Hero() {
 
       <div className="container-wide grid items-center gap-12 lg:grid-cols-[1.6fr_1fr]">
         <div className="animate-fade-in-up">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-xs font-medium text-white/70 backdrop-blur-sm">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-brand-900/60 px-4 py-1.5 text-xs font-medium text-white/70">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
@@ -75,7 +75,7 @@ export default function Hero() {
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-6 py-3 text-sm font-medium text-white backdrop-blur-sm transition-all hover:border-white/30 hover:bg-white/[0.07]"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-brand-900/60 px-6 py-3 text-sm font-medium text-white transition-colors hover:border-white/30 hover:bg-brand-900/80"
             >
               {ui.hero.getInTouch[lang]}
             </a>
