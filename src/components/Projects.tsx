@@ -9,7 +9,7 @@ export default function Projects() {
   const { lang } = useLang();
 
   return (
-    <section id="projects" className="relative py-20 sm:py-28">
+    <section id="projects" className="relative overflow-hidden py-20 sm:py-28">
       <div
         aria-hidden
         className="absolute left-0 top-1/2 -z-10 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-accent/10 blur-[120px]"
