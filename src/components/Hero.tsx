@@ -14,7 +14,7 @@ export default function Hero() {
       className="relative isolate overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28"
       style={{
         background:
-          "radial-gradient(ellipse 800px 500px at 50% 0%, rgba(106,55,119,0.35), transparent 60%), radial-gradient(ellipse 600px 400px at 90% 40%, rgba(156,95,176,0.12), transparent 60%), linear-gradient(180deg, #0c0610 0%, #160a1c 50%, #0c0610 100%)",
+          "radial-gradient(ellipse 800px 500px at 50% 0%, rgba(123,44,191,0.35), transparent 60%), radial-gradient(ellipse 600px 400px at 90% 40%, rgba(184,113,229,0.12), transparent 60%), linear-gradient(180deg, #0e0618 0%, #1a0a2c 50%, #0e0618 100%)",
       }}
     >
 

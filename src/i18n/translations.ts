@@ -39,7 +39,7 @@ export const ui = {
       languages: { de: "Sprachen", en: "Languages" } satisfies L,
     },
     factValues: {
-      location: { de: "Pfungen, Schweiz", en: "Pfungen, Switzerland" } satisfies L,
+      location: { de: "Winterthur, Zürich, Schweiz", en: "Winterthur, Zurich, Switzerland" } satisfies L,
       focus: { de: "KI · RAG · Backend", en: "AI · RAG · Backend" } satisfies L,
       studies: { de: "BSc Informatik @ ZHAW", en: "BSc CS @ ZHAW" } satisfies L,
       languages: { de: "DE · EN · TA", en: "DE · EN · TA" } satisfies L,

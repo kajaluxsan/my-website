@@ -33,6 +33,17 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("de");
 
   useEffect(() => {
+    // Always start at the top on refresh (browsers default to restoring the last
+    // scroll position, which is jarring on a single-page portfolio). Anchor
+    // links like /#projects still work because we skip the reset when a hash
+    // is present.
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+
     const initial = detectInitialLang();
     setLangState(initial);
     document.documentElement.lang = initial;

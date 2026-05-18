@@ -21,7 +21,7 @@ export default function Contact() {
     {
       label: ui.contact.location[lang],
       value: profile.contact.location[lang],
-      href: "https://maps.google.com/?q=Winterthur,+Switzerland",
+      href: "https://maps.google.com/?q=Winterthur,+Zürich,+Switzerland",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -47,7 +47,7 @@ export default function Contact() {
       className="relative overflow-hidden py-20 sm:py-28"
       style={{
         background:
-          "radial-gradient(ellipse 700px 500px at 50% 50%, rgba(106,55,119,0.18), transparent 60%)",
+          "radial-gradient(ellipse 700px 500px at 50% 50%, rgba(123,44,191,0.20), transparent 60%)",
       }}
     >
 

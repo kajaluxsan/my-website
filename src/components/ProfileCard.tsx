@@ -55,7 +55,7 @@ export default function ProfileCard({ open, onClose }: Props) {
     {
       label: ui.contact.location[lang],
       value: profile.contact.location[lang],
-      href: "https://maps.google.com/?q=Winterthur,+Switzerland",
+      href: "https://maps.google.com/?q=Winterthur,+Zürich,+Switzerland",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +111,7 @@ export default function ProfileCard({ open, onClose }: Props) {
       <div
         className="relative w-full max-w-sm overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-brand-900 to-brand-950 p-6 animate-scale-in"
         onClick={(e) => e.stopPropagation()}
-        style={{ boxShadow: "0 20px 60px -10px rgba(106,55,119,0.45)" }}
+        style={{ boxShadow: "0 20px 60px -10px rgba(123,44,191,0.55)" }}
       >
 
         <button
