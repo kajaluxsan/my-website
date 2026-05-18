@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllPosts } from "@/lib/posts";
+import { getAllPosts, slugifyTag } from "@/lib/posts";
 
 const SITE = "https://kajaluxan.mathitharan.ch";
 
@@ -34,13 +34,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  for (const post of getAllPosts()) {
+  const allPosts = getAllPosts();
+  for (const post of allPosts) {
     entries.push({
       url: `${SITE}/${post.lang}/blog/${post.slug}`,
       lastModified: new Date(post.date),
       changeFrequency: "monthly",
       priority: 0.7,
     });
+  }
+
+  // Tag pages — give Google more entry points
+  for (const lang of ["de", "en"] as const) {
+    const tags = new Set<string>();
+    for (const p of allPosts.filter((x) => x.lang === lang)) {
+      for (const t of p.tags) tags.add(slugifyTag(t));
+    }
+    for (const t of tags) {
+      entries.push({
+        url: `${SITE}/${lang}/blog/tag/${t}`,
+        lastModified: now,
+        changeFrequency: "weekly",
+        priority: 0.5,
+      });
+    }
   }
 
   return entries;

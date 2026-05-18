@@ -13,6 +13,8 @@ export type PostMeta = {
   tags: string[];
   readingMinutes: number;
   cover?: string;
+  aiAssisted?: boolean;
+  format?: "tutorial" | "opinion" | "comparison";
 };
 
 export type Post = PostMeta & { content: string };
@@ -40,8 +42,19 @@ function read(file: string): Post | null {
     tags: (data.tags as string[]) ?? [],
     readingMinutes: Math.max(1, Math.round(readingTime(content).minutes)),
     cover: data.cover as string | undefined,
+    aiAssisted: data.aiAssisted === true,
+    format: data.format as PostMeta["format"],
     content,
   };
+}
+
+export function slugifyTag(tag: string): string {
+  return tag
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 }
 
 export function getAllPosts(): Post[] {
