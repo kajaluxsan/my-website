@@ -47,7 +47,7 @@ export default function Contact() {
       className="relative overflow-hidden py-20 sm:py-28"
       style={{
         background:
-          "radial-gradient(ellipse 700px 500px at 50% 50%, rgba(168,85,247,0.10), transparent 60%)",
+          "radial-gradient(ellipse 700px 500px at 50% 50%, rgba(106,55,119,0.18), transparent 60%)",
       }}
     >
 
