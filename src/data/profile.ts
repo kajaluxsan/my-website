@@ -71,6 +71,7 @@ export const profile = {
       en: "Winterthur, Zurich, Switzerland",
     } satisfies L,
     linkedin: "https://www.linkedin.com/in/kajaluxan-mathitharan-031648264",
+    instagram: "https://www.instagram.com/_kaja_x_/",
   },
 };
 

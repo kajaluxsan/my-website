@@ -139,6 +139,7 @@ export const ui = {
     email: { de: "E-Mail", en: "Email" } satisfies L,
     phone: { de: "Telefon", en: "Phone" } satisfies L,
     location: { de: "Standort", en: "Location" } satisfies L,
+    viewProfile: { de: "Profil ansehen", en: "View profile" } satisfies L,
   },
   footer: {
     builtWith: {
