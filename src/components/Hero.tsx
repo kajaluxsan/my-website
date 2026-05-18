@@ -74,23 +74,21 @@ export default function Hero() {
         </div>
 
         <div className="flex justify-center lg:justify-end">
-          <div className="relative">
-            <div className="relative h-56 w-56 overflow-hidden rounded-full border-2 border-accent/30 bg-gradient-to-br from-brand-700 to-brand-900 shadow-[0_0_60px_-15px_rgba(168,85,247,0.5)] sm:h-72 sm:w-72">
-              <div className="absolute inset-0 flex items-center justify-center text-7xl font-bold text-white/90 sm:text-8xl">
-                KM
-              </div>
-              {profile.image && (
-                <Image
-                  src={profile.image}
-                  alt={profile.name}
-                  fill
-                  priority
-                  sizes="(min-width: 640px) 18rem, 14rem"
-                  className="relative object-cover"
-                />
-              )}
+          {profile.image ? (
+            <Image
+              src={profile.image}
+              alt={profile.name}
+              width={288}
+              height={288}
+              priority
+              fetchPriority="high"
+              className="h-56 w-56 rounded-full object-cover sm:h-72 sm:w-72"
+            />
+          ) : (
+            <div className="flex h-56 w-56 items-center justify-center rounded-full bg-gradient-to-br from-brand-700 to-brand-900 text-7xl font-bold text-white/90 sm:h-72 sm:w-72 sm:text-8xl">
+              KM
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>
