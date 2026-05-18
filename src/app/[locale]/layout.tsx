@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
+import { Analytics } from "@vercel/analytics/next";
 import { LanguageProvider, type Lang } from "@/i18n/LanguageProvider";
 
 const inter = Inter({
@@ -78,6 +79,7 @@ export default async function LocaleLayout({
         <LanguageProvider initialLang={locale as Lang}>
           {children}
         </LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
