@@ -71,7 +71,6 @@ export const profile = {
       en: "Winterthur, Switzerland",
     } satisfies L,
     linkedin: "https://www.linkedin.com/in/kajaluxan-mathitharan-031648264",
-    github: "https://github.com/kajaluxsan",
   },
 };
 
