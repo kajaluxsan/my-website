@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { profile } from "@/data/profile";
 import { useLang } from "@/i18n/LanguageProvider";
@@ -40,31 +41,41 @@ export default function Navbar() {
         }`}
       >
         <nav className="container-wide flex h-16 items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => setProfileOpen(true)}
             aria-label={ui.profileCard.openLabel[lang]}
-            className="group relative flex items-center gap-2 rounded-full p-1 pr-3 transition-all hover:bg-white/[0.06]"
+            className="group relative block h-9 w-9 overflow-hidden rounded-full border border-white/20 ring-2 ring-accent/0 transition-all hover:ring-accent/40"
           >
-            <span className="relative block h-9 w-9 overflow-hidden rounded-full border border-white/20 ring-2 ring-accent/0 transition-all group-hover:ring-accent/40">
-              <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-700 to-brand-900 text-[10px] font-bold text-white/90">
-                KM
-              </span>
-              {profile.avatarImage && (
-                <Image
-                  src={profile.avatarImage}
-                  alt={profile.name}
-                  fill
-                  sizes="40px"
-                  className="relative object-cover"
-                  priority
-                />
-              )}
+            <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-700 to-brand-900 text-[10px] font-bold text-white/90">
+              KM
             </span>
-            <span className="hidden text-xs font-semibold tracking-wide text-white sm:inline">
-              Kajaluxan<span className="text-accent">.</span>
-            </span>
+            {profile.avatarImage && (
+              <Image
+                src={profile.avatarImage}
+                alt={profile.name}
+                fill
+                sizes="40px"
+                className="relative object-cover"
+                priority
+              />
+            )}
           </button>
+          <Link
+            href={`/${lang}`}
+            scroll
+            onClick={(e) => {
+              if (window.location.pathname === `/${lang}`) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
+            className="hidden text-xs font-semibold tracking-wide text-white transition-colors hover:text-accent-light sm:inline"
+          >
+            Kajaluxan<span className="text-accent">.</span>
+          </Link>
+        </div>
 
           <ul className="hidden items-center gap-1 lg:flex">
             {navItems.map((item) => (
