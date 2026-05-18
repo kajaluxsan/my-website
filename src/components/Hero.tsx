@@ -12,25 +12,16 @@ export default function Hero() {
     <section
       id="top"
       className="relative isolate overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28"
+      style={{
+        background:
+          "radial-gradient(ellipse 800px 500px at 50% 0%, rgba(168,85,247,0.18), transparent 60%), radial-gradient(ellipse 600px 400px at 90% 40%, rgba(125,49,245,0.10), transparent 60%), linear-gradient(180deg, #0d0719 0%, #14092b 50%, #0d0719 100%)",
+      }}
     >
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-brand-950 via-brand-900 to-brand-950" />
-      <div className="absolute inset-0 -z-10 bg-grid-pattern bg-[size:48px_48px] opacity-30" />
-      <div
-        aria-hidden
-        className="absolute left-1/2 top-0 -z-10 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-accent/20 blur-[120px]"
-      />
-      <div
-        aria-hidden
-        className="absolute right-0 top-1/3 -z-10 h-[400px] w-[400px] rounded-full bg-brand-400/10 blur-[100px]"
-      />
 
       <div className="container-wide grid items-center gap-12 lg:grid-cols-[1.6fr_1fr]">
         <div className="animate-fade-in-up">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-brand-900/60 px-4 py-1.5 text-xs font-medium text-white/70">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-            </span>
+            <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)]" />
             {ui.hero.available[lang]}
           </div>
 
@@ -83,27 +74,21 @@ export default function Hero() {
         </div>
 
         <div className="flex justify-center lg:justify-end">
-          <div className="relative">
-            <div
-              aria-hidden
-              className="absolute -inset-6 rounded-full bg-gradient-to-tr from-accent/40 via-brand-400/30 to-transparent opacity-70 blur-2xl"
+          {profile.image ? (
+            <Image
+              src={profile.image}
+              alt={profile.name}
+              width={288}
+              height={288}
+              priority
+              fetchPriority="high"
+              className="h-56 w-56 rounded-full object-cover sm:h-72 sm:w-72"
             />
-            <div className="relative h-56 w-56 overflow-hidden rounded-full border-2 border-white/10 bg-gradient-to-br from-brand-700 to-brand-900 shadow-2xl sm:h-72 sm:w-72">
-              <div className="absolute inset-0 flex items-center justify-center text-7xl font-bold text-white/90 sm:text-8xl">
-                KM
-              </div>
-              {profile.image && (
-                <Image
-                  src={profile.image}
-                  alt={profile.name}
-                  fill
-                  priority
-                  sizes="(min-width: 640px) 18rem, 14rem"
-                  className="relative object-cover"
-                />
-              )}
+          ) : (
+            <div className="flex h-56 w-56 items-center justify-center rounded-full bg-gradient-to-br from-brand-700 to-brand-900 text-7xl font-bold text-white/90 sm:h-72 sm:w-72 sm:text-8xl">
+              KM
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>

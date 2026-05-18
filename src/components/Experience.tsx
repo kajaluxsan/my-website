@@ -25,14 +25,12 @@ export default function Experience() {
             >
               <span
                 className={`absolute -left-[33px] sm:-left-[41px] flex h-4 w-4 items-center justify-center rounded-full ring-4 ring-brand-950 ${
-                  exp.current ? "bg-accent" : "bg-brand-400"
+                  exp.current
+                    ? "bg-accent shadow-[0_0_10px_rgba(168,85,247,0.6)]"
+                    : "bg-brand-400"
                 }`}
                 aria-hidden
-              >
-                {exp.current && (
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-50" />
-                )}
-              </span>
+              />
 
               <article className="surface surface-hover p-6">
                 <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
