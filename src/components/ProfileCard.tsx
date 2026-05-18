@@ -55,7 +55,7 @@ export default function ProfileCard({ open, onClose }: Props) {
     {
       label: ui.contact.location[lang],
       value: profile.contact.location[lang],
-      href: "https://maps.google.com/?q=Winterthur,+Switzerland",
+      href: "https://maps.google.com/?q=Winterthur,+Zürich,+Switzerland",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"

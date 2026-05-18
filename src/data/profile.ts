@@ -67,8 +67,8 @@ export const profile = {
   contact: {
     email: "kajaluxan@mathitharan.ch",
     location: {
-      de: "Winterthur, Schweiz",
-      en: "Winterthur, Switzerland",
+      de: "Winterthur, Zürich, Schweiz",
+      en: "Winterthur, Zürich, Switzerland",
     } satisfies L,
     linkedin: "https://www.linkedin.com/in/kajaluxan-mathitharan-031648264",
   },
