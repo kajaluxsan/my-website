@@ -36,36 +36,62 @@ Inhalt unter dem Frontmatter ist standard Markdown mit MDX-Erweiterungen.
 JSX interpretiert. Schreibe `unter 1M` statt `<1M`, oder pack es in
 Backticks.
 
-## Automatisierte Drafts mit Claude Max
+## Automatisierte Drafts mit Claude Max (keine API-Kosten)
 
-Es gibt **zwei Wege**, täglich automatische Draft-PRs zu generieren –
-beide nutzen das Claude-Max-Abo (keine API-Kosten):
+Drei Optionen – nimm die, die für dich am einfachsten ist.
 
-### A) Scheduled Trigger in Claude Code on the Web (empfohlen)
+### A) GitHub Action mit Claude Code Action (empfohlen)
 
-1. Auf <https://claude.ai/code> einloggen
+Läuft auf GitHub-Servern, nutzt dein Max-Abo via OAuth-Token, kein API.
+
+**Einmalige Einrichtung (5 Min):**
+
+1. **Lokal** im Terminal (egal welcher Computer, wichtig: du musst bei
+   Claude Code mit deinem Max-Account eingeloggt sein):
+   ```bash
+   claude setup-token
+   ```
+   → kopiert dir einen langen OAuth-Token in die Zwischenablage
+
+2. **Auf GitHub**:
+   - <https://github.com/kajaluxsan/my-website/settings/secrets/actions>
+   - "New repository secret"
+   - Name: **`CLAUDE_CODE_OAUTH_TOKEN`**
+   - Value: Token aus Schritt 1 einfügen
+   - "Add secret"
+
+3. **GitHub-App installieren** (einmalig pro Repo):
+   - <https://github.com/apps/claude>
+   - "Install" → Repo `my-website` auswählen
+
+4. Optional: erstes Mal **manuell triggern** unter
+   <https://github.com/kajaluxsan/my-website/actions/workflows/daily-blog.yml>
+   → "Run workflow"
+
+Danach läuft `.github/workflows/daily-blog.yml` täglich 05:00 UTC und
+öffnet PRs.
+
+### B) Scheduled Trigger in Claude Code on the Web
+
+Falls deine Account-Version die Schedule-Funktion zeigt:
+
+1. <https://claude.ai/code> öffnen
 2. Repo `kajaluxsan/my-website` öffnen
-3. **Triggers** / **Schedule** → neuen Scheduled Trigger erstellen
-4. Schedule: z.B. täglich 06:00 Schweiz-Zeit (Cron `0 5 * * *` UTC)
-5. Prompt: gesamten Inhalt von `scripts/daily-blog-prompt.md` ab `## PROMPT`
-   reinkopieren (alles unter dieser Zeile)
-6. Speichern – läuft täglich, öffnet PRs, du reviewst und mergst manuell
+3. Schedule / Scheduled Trigger erstellen
+4. Schedule: `0 5 * * *` (täglich 06-07 Uhr Schweiz)
+5. Als Prompt den Inhalt von `scripts/daily-blog-prompt.md` ab `## PROMPT`
+   reinkopieren
 
-Details: <https://code.claude.com/docs/en/claude-code-on-the-web>
+### C) Lokal via Cron + claude -p
 
-### B) Lokal via Cron + claude -p
-
-Wenn du einen Rechner / Server hast, der dauerhaft läuft und auf dem
-Claude Code installiert ist:
+Wenn du einen Rechner / Server hast, der durchläuft und Claude Code
+installiert ist:
 
 ```bash
 crontab -e
-# Folgendes hinzufügen (06:00 Schweiz = 05:00 UTC im Sommer):
+# Folgendes hinzufügen:
 0 5 * * *  cd ~/projects/my-website && ./scripts/daily-blog.sh > /tmp/blog.log 2>&1
 ```
-
-Das Script liest `scripts/daily-blog-prompt.md`, gibt es an `claude -p`,
-und Claude erledigt den Rest (Recherche, Schreiben, Commit, PR).
 
 ## Wichtig: niemals blind mergen
 

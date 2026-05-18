@@ -1,0 +1,41 @@
+name: Daily Blog Draft
+
+# Uses the official Claude Code GitHub Action (anthropics/claude-code-action).
+# Authenticates via an OAuth token from the Claude Max subscription — no
+# API key, no per-post charge. Runs daily and opens a PR with the draft;
+# never auto-merges (Google penalises scaled unreviewed AI content).
+
+on:
+  schedule:
+    - cron: "0 5 * * *"   # 05:00 UTC = 06:00 CET / 07:00 CEST
+  workflow_dispatch:
+    inputs:
+      topic_hint:
+        description: "Optional topic hint (Claude is free to ignore)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Read the file `scripts/daily-blog-prompt.md` and follow the
+            instructions starting from the line "## PROMPT" exactly.
+            ${{ github.event.inputs.topic_hint && format('Topic hint from the human: {0}', github.event.inputs.topic_hint) || '' }}
+
+            Open a Pull Request when done. Do NOT merge it.
