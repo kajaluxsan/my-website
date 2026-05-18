@@ -20,7 +20,7 @@ export default function Navbar() {
     { href: `/${lang}#experience`, label: ui.nav.experience[lang] },
     { href: `/${lang}#projects`, label: ui.nav.projects[lang] },
     { href: `/${lang}#skills`, label: ui.nav.skills[lang] },
-    { href: `/${lang}/blog`, label: lang === "de" ? "Blog" : "Blog" },
+    { href: `/${lang}/blog`, label: "Blog" },
     { href: `/${lang}#contact`, label: ui.nav.contact[lang] },
   ];
 
@@ -30,6 +30,13 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const homeClick = (e: React.MouseEvent) => {
+    if (window.location.pathname === `/${lang}`) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <>
@@ -42,40 +49,35 @@ export default function Navbar() {
       >
         <nav className="container-wide flex h-16 items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setProfileOpen(true)}
-            aria-label={ui.profileCard.openLabel[lang]}
-            className="group relative block h-9 w-9 overflow-hidden rounded-full border border-white/20 ring-2 ring-accent/0 transition-all hover:ring-accent/40"
-          >
-            <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-700 to-brand-900 text-[10px] font-bold text-white/90">
-              KM
-            </span>
-            {profile.avatarImage && (
-              <Image
-                src={profile.avatarImage}
-                alt={profile.name}
-                fill
-                sizes="40px"
-                className="relative object-cover"
-                priority
-              />
-            )}
-          </button>
-          <Link
-            href={`/${lang}`}
-            scroll
-            onClick={(e) => {
-              if (window.location.pathname === `/${lang}`) {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }
-            }}
-            className="hidden text-xs font-semibold tracking-wide text-white transition-colors hover:text-accent-light sm:inline"
-          >
-            Kajaluxan<span className="text-accent">.</span>
-          </Link>
-        </div>
+            <button
+              type="button"
+              onClick={() => setProfileOpen(true)}
+              aria-label={ui.profileCard.openLabel[lang]}
+              className="group relative block h-9 w-9 overflow-hidden rounded-full border border-white/20 ring-2 ring-accent/0 transition-all hover:ring-accent/40"
+            >
+              <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-700 to-brand-900 text-[10px] font-bold text-white/90">
+                KM
+              </span>
+              {profile.avatarImage && (
+                <Image
+                  src={profile.avatarImage}
+                  alt={profile.name}
+                  fill
+                  sizes="40px"
+                  className="relative object-cover"
+                  priority
+                />
+              )}
+            </button>
+            <Link
+              href={`/${lang}`}
+              onClick={homeClick}
+              aria-label={lang === "de" ? "Zur Startseite" : "Go to home"}
+              className="rounded-md px-2 py-1.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-white/[0.05] hover:text-accent-light"
+            >
+              Kajaluxan<span className="text-accent">.</span>
+            </Link>
+          </div>
 
           <ul className="hidden items-center gap-1 lg:flex">
             {navItems.map((item) => (
@@ -135,6 +137,18 @@ export default function Navbar() {
         {open && (
           <div className="border-t border-white/10 bg-brand-950 lg:hidden">
             <ul className="container-wide flex flex-col gap-1 py-4">
+              <li>
+                <Link
+                  href={`/${lang}`}
+                  onClick={(e) => {
+                    setOpen(false);
+                    homeClick(e);
+                  }}
+                  className="block rounded-lg px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-white/5"
+                >
+                  {lang === "de" ? "Startseite" : "Home"}
+                </Link>
+              </li>
               {navItems.map((item) => (
                 <li key={item.href}>
                   <a

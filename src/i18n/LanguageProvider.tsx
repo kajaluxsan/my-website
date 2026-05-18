@@ -36,14 +36,31 @@ export function LanguageProvider({
     document.cookie = `lang=${initialLang}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
   }, [initialLang]);
 
-  // Reset scroll on real refresh (not on locale switch).
+  // Reset scroll to top on every real page load. iOS Safari ignores
+  // `scrollRestoration = "manual"` sometimes and the layout shifts as
+  // images/fonts arrive, so we fire several times within the first
+  // animation frames and also on `pageshow` (covers back/forward cache).
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
-    if (!window.location.hash) {
-      window.scrollTo(0, 0);
-    }
+    if (window.location.hash) return;
+
+    const toTop = () => window.scrollTo(0, 0);
+    toTop();
+    requestAnimationFrame(toTop);
+    const t1 = setTimeout(toTop, 50);
+    const t2 = setTimeout(toTop, 250);
+
+    const onShow = (e: PageTransitionEvent) => {
+      if (e.persisted && !window.location.hash) toTop();
+    };
+    window.addEventListener("pageshow", onShow);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      window.removeEventListener("pageshow", onShow);
+    };
   }, []);
 
   const setLang = useCallback(

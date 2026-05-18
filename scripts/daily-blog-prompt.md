@@ -56,24 +56,55 @@ Each topic must:
 
 ### Step 4 — Write each post (3 × 2 languages = 6 files)
 
+**Voice — this matters more than anything else.** Write like a tired but
+thoughtful engineer typing into a notes app at the end of a workday.
+The reader should not be able to tell this is AI-assisted.
+
+Anti-patterns that scream AI (ban them):
+
+- Em-dashes (—). Use a normal dash (-), a colon, or just split into two sentences.
+- "In conclusion", "In essence", "Indeed", "Moreover", "Furthermore", "It's worth noting"
+- "Delve", "leverage", "navigate the complexities", "robust", "seamless", "streamline",
+  "in today's fast-paced", "the world of", "a game-changer", "unlock", "harness", "tapestry"
+- Symmetric three-item lists ("X, Y, and Z" used four times in a row)
+- The "It's not just X, it's Y" rhetorical move
+- Perfect parallel sentence structures throughout
+- Bullet lists with exactly 3-5 items every single time
+- Headings phrased as questions ("What is RAG?", "Why does it matter?")
+
+Patterns that read human:
+
+- Contractions: "it's", "don't", "won't", "I've"
+- Short sentences mixed with longer ones. Some sentences fragments. Like this.
+- Specific numbers, dates, vendor names, version strings — not "many", "various", "several"
+- Concrete code snippets with realistic variable names
+- Asides in parentheses (kind of like this)
+- The occasional admission of uncertainty ("I'm not sure why this worked",
+  "this might be the wrong call, but...")
+- Personal pronouns: "I", "we", "you" — not "one" or "the developer"
+- Linking thoughts with "but", "though", "still", "anyway" rather than
+  "however", "nevertheless"
+
 **Mandatory structure for every post**:
 
-1. **TL;DR (3-4 lines)** at the very top after frontmatter
-2. **Body** in H2 (`##`) sections: 800-1500 words
-3. **Aus der Praxis / From my work** section (H2): at least one of:
+1. **TL;DR (2-3 lines)** at the very top after frontmatter — written as
+   if you're telling a colleague "here's the gist", not a marketing pitch
+2. **Body** in H2 (`##`) sections: 800-1500 words. Headings should be
+   statements or topics, not questions.
+3. **"Aus der Praxis" / "From my work"** section (H2): at least one of:
    - A real metric from Kajaluxan's projects (MRR@5: 0.96, Recall@5: 0.99,
-     100+ table MS SQL → PostgreSQL migration, on-prem RAG with Qdrant +
+     100+ table MS SQL to PostgreSQL migration, on-prem RAG with Qdrant +
      PostgreSQL hybrid via RRF, semantic quality 87.2%)
    - A concrete trade-off he encountered (chunk size, embedding choice,
      timeouts, latency)
    - A failure / lesson learned ("we tried X, abandoned because Y")
-   This section is the most important — it's what makes the post rank
-   over generic AI content. It must contain something Claude could not
-   have guessed from training data.
+   This section is the most important. It must contain something Claude
+   could not have guessed from training data.
 4. **Internal links**: link to at least 2 other posts on the site that
    are topically related. Use `/de/blog/<slug>` or `/en/blog/<slug>`.
-5. **Honest closing** in the author's voice (no marketing-speak,
-   no emoji).
+5. **Honest closing** in the author's voice. Not "I hope this was helpful".
+   Something like "if you ran into the same thing, let me know" or just
+   end on the last technical point.
 
 **Hard rules**:
 
@@ -84,6 +115,7 @@ Each topic must:
 - NEVER raw `<` or `>` outside code fences (MDX-JSX trap). Use words
   ("over 1M", "under 500k") or backticks
 - No emoji anywhere
+- No em-dashes (—) anywhere outside code
 - Code fences must have a language tag (```python, ```bash, etc.)
 
 ### Step 5 — Frontmatter
