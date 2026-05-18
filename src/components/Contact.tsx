@@ -42,11 +42,14 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="relative overflow-hidden py-20 sm:py-28">
-      <div
-        aria-hidden
-        className="absolute left-1/2 top-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/15 blur-[120px]"
-      />
+    <section
+      id="contact"
+      className="relative overflow-hidden py-20 sm:py-28"
+      style={{
+        background:
+          "radial-gradient(ellipse 700px 500px at 50% 50%, rgba(168,85,247,0.10), transparent 60%)",
+      }}
+    >
 
       <div className="container-narrow text-center">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent-light">
