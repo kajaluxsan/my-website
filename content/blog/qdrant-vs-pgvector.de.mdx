@@ -1,0 +1,66 @@
+---
+title: "Qdrant vs. pgvector: welches Vector-DB für dein RAG-Projekt?"
+description: "Ein nüchterner Vergleich von Qdrant und PostgreSQL pgvector – Performance, Setup, Skalierung und wann welches besser passt."
+date: 2026-05-18
+tags: ["Qdrant", "pgvector", "PostgreSQL", "Vector Database", "RAG"]
+slug: qdrant-vs-pgvector
+---
+
+Wer ein RAG-System baut, steht früh vor der Frage: **dedizierte Vector-DB** wie Qdrant, oder einfach **PostgreSQL mit pgvector**? Beide funktionieren – aber sie haben sehr unterschiedliche Stärken.
+
+## Kurzvergleich
+
+| Aspekt | Qdrant | pgvector |
+|---|---|---|
+| Setup-Aufwand | Eigener Container | Postgres-Extension |
+| Performance bei über 1M Vektoren | Ausgezeichnet | OK mit IVFFlat/HNSW |
+| Filterung über Metadaten | Sehr schnell (Payload-Index) | Mit SQL flexibel, aber langsamer |
+| Hybride Suche (Vector + BM25) | Eingebaut | Manuell via tsvector |
+| Reine Vector-Operationen | Optimiert | Auf Postgres aufgesetzt |
+| Backups / Replikation | Eigene Mechanismen | Standard Postgres-Tooling |
+| Operationskosten | Zweite DB | Nur Postgres |
+
+## Wann Qdrant?
+
+- Du brauchst **schnelles Retrieval bei mehr als 5 Mio. Vektoren**
+- Du nutzt komplexe **Payload-Filter** (z.B. `lang=de AND date>2025`)
+- Du willst **hybride Suche out-of-the-box**
+- Du baust ein **AI-natives Produkt** und Vector-Search ist Kern
+
+## Wann pgvector?
+
+- Du hast **schon Postgres** und willst keine zweite DB
+- Dataset ist **unter 1 Mio. Vektoren**
+- Operations-Team kennt Postgres, aber kein Qdrant
+- Du brauchst **transaktionale Konsistenz** zwischen Vektoren und Metadaten
+
+## Performance-Hinweis aus der Praxis
+
+In einem Projekt mit ~750k juristischen Dokument-Chunks lieferten beide DBs in unserem Setup vergleichbare Latenzen unter 50ms. Der **Knackpunkt** war nicht die DB, sondern:
+
+1. **Embedding-Modell** (kleines vs. grosses Modell)
+2. **Chunk-Grösse** (200 vs. 800 Tokens)
+3. **Hybrid-Strategy** (RRF mit BM25 brachte +15% Recall@5)
+
+## Hybride Suche mit RRF
+
+Wir kombinieren in Production Vector-Search mit BM25 via Reciprocal Rank Fusion:
+
+```python
+def rrf(results_lists, k=60):
+    scores = {}
+    for results in results_lists:
+        for rank, doc_id in enumerate(results):
+            scores[doc_id] = scores.get(doc_id, 0) + 1 / (k + rank)
+    return sorted(scores.items(), key=lambda x: -x[1])
+```
+
+Bei Qdrant ist das eingebaut (`prefetch` + Fusion). Bei pgvector musst du `tsvector`-Suche und Vector-Suche separat laufen lassen und die Resultate selbst fusionieren.
+
+## Empfehlung
+
+- **Prototyp & unter 500k Vektoren**: pgvector – einfacher, eine DB weniger
+- **Production & über 1 Mio. Vektoren + komplexe Filter**: Qdrant
+- **Hybrid-Suche prioritär**: Qdrant
+
+Beide sind solide. Die DB ist selten der Engpass – Embedding-Modell, Chunking und Retrieval-Strategie haben grösseren Einfluss.

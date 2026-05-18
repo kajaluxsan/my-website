@@ -45,7 +45,7 @@ export default function Hero() {
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
-              href="#projects"
+              href={`/${lang}#projects`}
               className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-white shadow-lg shadow-accent/20 transition-all hover:bg-accent-light hover:shadow-xl hover:shadow-accent/30"
             >
               {ui.hero.viewProjects[lang]}
@@ -65,7 +65,7 @@ export default function Hero() {
               </svg>
             </a>
             <a
-              href="#contact"
+              href={`/${lang}#contact`}
               className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-brand-900/60 px-6 py-3 text-sm font-medium text-white transition-colors hover:border-white/30 hover:bg-brand-900/80"
             >
               {ui.hero.getInTouch[lang]}

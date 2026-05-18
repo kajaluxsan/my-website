@@ -15,12 +15,12 @@ export default function Navbar() {
   const [profileOpen, setProfileOpen] = useState(false);
 
   const navItems = [
-    { href: "#about", label: ui.nav.about[lang] },
-    { href: "#experience", label: ui.nav.experience[lang] },
-    { href: "#projects", label: ui.nav.projects[lang] },
-    { href: "#skills", label: ui.nav.skills[lang] },
-    { href: "#education", label: ui.nav.education[lang] },
-    { href: "#contact", label: ui.nav.contact[lang] },
+    { href: `/${lang}#about`, label: ui.nav.about[lang] },
+    { href: `/${lang}#experience`, label: ui.nav.experience[lang] },
+    { href: `/${lang}#projects`, label: ui.nav.projects[lang] },
+    { href: `/${lang}#skills`, label: ui.nav.skills[lang] },
+    { href: `/${lang}/blog`, label: lang === "de" ? "Blog" : "Blog" },
+    { href: `/${lang}#contact`, label: ui.nav.contact[lang] },
   ];
 
   useEffect(() => {
@@ -82,7 +82,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <LanguageSwitcher />
             <a
-              href="#contact"
+              href={`/${lang}#contact`}
               className="hidden rounded-full bg-accent px-4 py-2 text-sm font-medium text-white shadow-lg shadow-accent/20 transition-all hover:bg-accent-light hover:shadow-accent/30 md:inline-block"
             >
               {ui.nav.cta[lang]}
@@ -137,7 +137,7 @@ export default function Navbar() {
               ))}
               <li>
                 <a
-                  href="#contact"
+                  href={`/${lang}#contact`}
                   onClick={() => setOpen(false)}
                   className="mt-2 block rounded-lg bg-accent px-4 py-3 text-center text-sm font-medium text-white"
                 >

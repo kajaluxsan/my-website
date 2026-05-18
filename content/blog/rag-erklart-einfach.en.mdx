@@ -1,0 +1,51 @@
+---
+title: "RAG explained: how LLMs access your own data"
+description: "What Retrieval Augmented Generation is, why it works and when to use it – from real-world projects."
+date: 2026-05-18
+tags: ["RAG", "LLM", "AI", "Tutorial"]
+slug: rag-erklart-einfach
+---
+
+LLMs like GPT-4 or Claude know a lot — but they know nothing about **your** documents, your code, your internal wiki. That's where **Retrieval Augmented Generation (RAG)** comes in.
+
+## What is RAG?
+
+RAG is a simple pattern: **before** sending a request to the LLM, you fetch relevant chunks from your own data and include them in the prompt. The model then answers based on those chunks instead of relying purely on its pretraining.
+
+The pipeline has three steps:
+
+1. **Indexing** – split documents into small chunks, compute embeddings, store in a vector DB
+2. **Retrieval** – when the user asks something, fetch the most similar chunks from the DB
+3. **Generation** – send the chunks together with the question to the LLM
+
+## Why does it work?
+
+The trick: embeddings translate text into a vector that encodes meaning. Two texts with similar meaning have similar vectors — even when the words differ. So you can match "How do I cancel my subscription?" with "I want to terminate my contract".
+
+## When to use RAG?
+
+- When your LLM needs access to **internal data** that wasn't in its pretraining
+- When answers must be **verifiable** (you can show sources)
+- When the data is **regularly updated** (re-training would be too expensive)
+- When the dataset is **too large for the context window**
+
+## When not to?
+
+- Small, static datasets that fit entirely into the context
+- When you need deterministic answers (LLMs hallucinate even with context)
+- When latency must be extremely low (RAG adds 100–500ms for retrieval)
+
+## A lesson from my projects
+
+Building an on-premise RAG system for the legal domain, we reached **MRR@5: 0.96** using **hybrid search** (vector + BM25 via Reciprocal Rank Fusion). Pure vector retrieval scored noticeably lower. The takeaway: combine semantic and lexical search, especially in specialised domains with technical vocabulary.
+
+## What's next
+
+Coming posts will cover concrete components:
+
+- Chunking strategies
+- Comparing embedding models
+- Hybrid search with RRF
+- LLM evaluation with MRR@5 and Recall@5
+
+If you have questions or experience to share, drop me an email.
