@@ -1,25 +1,26 @@
-name: Daily Blog Drafts
+name: Daily Blog Draft
 
-# Runs every day at 04:00 UTC (06:00 CEST / 05:00 CET). Drafts blog posts
-# via the Claude API with web-search-based research and opens a PR for
-# review. No auto-merge — you (Kajaluxan) approve & merge so Google does
-# not see hundreds of un-reviewed AI posts and tank the ranking.
+# Uses the official Claude Code GitHub Action (anthropics/claude-code-action).
+# Authenticates via an OAuth token from the Claude Max subscription — no
+# API key, no per-post charge. Runs daily and opens a PR with the draft;
+# never auto-merges (Google penalises scaled unreviewed AI content).
+
 on:
   schedule:
-    - cron: "0 4 * * *"
+    - cron: "0 5 * * *"   # 05:00 UTC = 06:00 CET / 07:00 CEST
   workflow_dispatch:
     inputs:
-      posts:
-        description: "How many posts to generate this run"
+      topic_hint:
+        description: "Optional topic hint (Claude is free to ignore)"
         required: false
-        default: "1"
+        default: ""
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  generate:
+  draft:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
@@ -28,41 +29,13 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@v1
         with:
-          node-version: "20"
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Read the file `scripts/daily-blog-prompt.md` and follow the
+            instructions starting from the line "## PROMPT" exactly.
+            ${{ github.event.inputs.topic_hint && format('Topic hint from the human: {0}', github.event.inputs.topic_hint) || '' }}
 
-      - name: Install Anthropic SDK
-        run: npm install --no-save @anthropic-ai/sdk@latest
-
-      - name: Generate blog drafts
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || 'claude-sonnet-4-6' }}
-          BLOG_POSTS_PER_RUN: ${{ github.event.inputs.posts || '1' }}
-        run: node scripts/generate-blog-posts.mjs
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
-        with:
-          branch: drafts/blog-${{ github.run_id }}
-          commit-message: "draft: blog posts $(date -u +%Y-%m-%d)"
-          title: "📝 Blog drafts – $(date -u +%Y-%m-%d)"
-          body: |
-            Automated Claude-generated drafts for review.
-
-            **Before merging:**
-            - [ ] Read each post end-to-end
-            - [ ] Verify any technical claims / benchmarks
-            - [ ] Add a personal angle or example to each
-            - [ ] Check both DE and EN read naturally
-            - [ ] Adjust title/description for SEO if needed
-
-            Auto-merging unreviewed AI content is the fastest way to get
-            deindexed by Google. Please review.
-          labels: |
-            blog-draft
-            ai-generated
-          add-paths: |
-            content/blog/*.mdx
+            Open a Pull Request when done. Do NOT merge it.
