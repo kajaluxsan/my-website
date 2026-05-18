@@ -14,7 +14,7 @@ export default function Projects() {
       className="relative overflow-hidden py-20 sm:py-28"
       style={{
         background:
-          "radial-gradient(ellipse 600px 500px at 0% 50%, rgba(106,55,119,0.12), transparent 60%)",
+          "radial-gradient(ellipse 600px 500px at 0% 50%, rgba(123,44,191,0.14), transparent 60%)",
       }}
     >
 

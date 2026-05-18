@@ -26,7 +26,7 @@ export default function Experience() {
               <span
                 className={`absolute -left-[33px] sm:-left-[41px] flex h-4 w-4 items-center justify-center rounded-full ring-4 ring-brand-950 ${
                   exp.current
-                    ? "bg-accent shadow-[0_0_10px_rgba(106,55,119,0.7)]"
+                    ? "bg-accent shadow-[0_0_12px_rgba(184,113,229,0.7)]"
                     : "bg-brand-400"
                 }`}
                 aria-hidden
