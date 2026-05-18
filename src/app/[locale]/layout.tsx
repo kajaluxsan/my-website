@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { LanguageProvider, type Lang } from "@/i18n/LanguageProvider";
 
 const inter = Inter({
@@ -80,6 +81,7 @@ export default async function LocaleLayout({
           {children}
         </LanguageProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
