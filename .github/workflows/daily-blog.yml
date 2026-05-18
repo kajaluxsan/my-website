@@ -1,9 +1,10 @@
-name: Daily Blog Draft
+name: Daily Blog Drafts (3 per day)
 
 # Uses the official Claude Code GitHub Action (anthropics/claude-code-action).
 # Authenticates via an OAuth token from the Claude Max subscription — no
-# API key, no per-post charge. Runs daily and opens a PR with the draft;
-# never auto-merges (Google penalises scaled unreviewed AI content).
+# API key, no per-post charge. Runs daily, generates 3 posts in 3 different
+# formats (tutorial / opinion / comparison) and opens a single PR. Never
+# auto-merges — Google penalises scaled unreviewed AI content.
 
 on:
   schedule:

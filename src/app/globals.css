@@ -100,6 +100,22 @@
   .prose-blog img {
     @apply my-6 rounded-xl;
   }
+  .prose-blog table {
+    @apply my-6 w-full overflow-hidden rounded-xl border border-white/10 text-sm;
+    border-collapse: collapse;
+  }
+  .prose-blog thead {
+    @apply bg-brand-900/60;
+  }
+  .prose-blog th {
+    @apply px-4 py-2.5 text-left font-semibold text-white;
+  }
+  .prose-blog td {
+    @apply border-t border-white/10 px-4 py-2.5 text-white/75;
+  }
+  .prose-blog tr:hover td {
+    @apply bg-brand-900/30;
+  }
 }
 
 /* Custom scrollbar */

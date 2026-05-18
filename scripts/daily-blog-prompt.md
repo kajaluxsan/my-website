@@ -1,109 +1,172 @@
 # Daily Blog Generator – Prompt
 
-Dieser Prompt ist gedacht für eine **Scheduled Session in Claude Code on the
-Web** (oder lokal via `claude -p`). Er nutzt das Max-Abo, **keine API-Kosten**.
+Dieser Prompt wird von der GitHub Action `.github/workflows/daily-blog.yml`
+oder von einem Scheduled Trigger / lokalem Cron mit `claude -p` aufgerufen.
+Authentifizierung über Claude Max via OAuth – **keine API-Kosten**.
 
-Beim Setup als Scheduled Trigger einfach den Inhalt unter `## PROMPT` als
-Prompt einfügen. Claude erledigt Recherche, schreibt, committet und öffnet PR.
+Ziel: täglich **3 unterschiedliche Posts** mit jeweils einer **erzwungenen
+Praxis-Sektion** veröffentlichen. So bekommen wir Volume (gut für neue
+Domain) ohne reines AI-Content-Farming (Google-Penalty-Risiko).
 
 ---
 
 ## PROMPT
 
-You are running as a scheduled task to write one new blog post for the
-repository `kajaluxsan/my-website`. The site is a personal portfolio at
-<https://kajaluxan.mathitharan.ch> by Kajaluxan Mathitharan (BSc Computer
-Science ZHAW, Project Manager at LogObject AG, focus on RAG / LLM /
-backend engineering for the legal domain).
+You are running as a scheduled task to write **three** new blog posts for
+the repository `kajaluxsan/my-website`. The site is the personal portfolio
+of Kajaluxan Mathitharan (BSc Computer Science ZHAW, working at LogObject
+AG on legal-tech RAG systems).
 
-Goal of this run: research one timely topic, draft a single high-quality
-blog post in **both German and English**, open a Pull Request for review.
-**Do not merge.** Stop once the PR is open.
+Goal: research and draft 3 high-quality posts in **both German and
+English**, each on a distinct topic and with a different format. Open a
+single Pull Request that contains all 6 MDX files. **Do not merge.**
 
-### Step 1 — Inventory
+### Step 1 — Inventory existing posts
 
-Read every file under `content/blog/*.mdx` and list the existing titles.
-Don't duplicate any of them.
+Read every file under `content/blog/*.mdx`, collect their titles and
+slugs. Do not duplicate. Vary the topics across the 3 new posts (don't
+publish 3 RAG-evaluation posts in one day — mix it up).
 
 ### Step 2 — Research
 
-Use web search to identify what's currently being discussed in the
-AI / RAG / LLM engineering community (last 7 days). Good sources:
+Use web search to identify what's currently being discussed (last 7 days):
 
-- Hacker News front page (filter for AI/RAG/LLM)
-- Anthropic, OpenAI, LangChain, Qdrant release notes
-- arXiv recent papers on RAG, LLM evaluation, retrieval
-- Vercel / Next.js AI ecosystem updates (if relevant)
+- Hacker News front page (AI / dev tooling)
+- Anthropic, OpenAI, LangChain, Qdrant, Pinecone release notes
+- arXiv recent papers (RAG, LLM evaluation, retrieval)
+- Vercel / Next.js / Cloudflare AI ecosystem
+- Practitioner threads on r/LocalLLaMA, r/MachineLearning
 
-Pick **one** narrowly-scoped topic that:
+### Step 3 — Pick 3 topics in 3 different formats
 
-- Is timely (last 1-3 months)
-- Has practical depth, not a "what is X" listicle
-- Aligns with the author's expertise: RAG pipelines, hybrid search
-  (Qdrant + BM25 via RRF), LLM evaluation (MRR@5 / Recall@5), on-premise
-  AI, legal-tech, Spring Boot, FastAPI, PostgreSQL, vector databases
-- Was not already covered
+Each post must have a **different format**. Pick one from each row:
 
-### Step 3 — Write
+| Slot | Format | Examples |
+|---|---|---|
+| 1 | **Tutorial / How-to** | "How to evaluate RAG with MRR@5", "Setting up Qdrant with PostgreSQL" |
+| 2 | **Opinion / Take** | "Why I stopped using pgvector for production RAG", "RAG is solved, embedding choice isn't" |
+| 3 | **Comparison / Deep-Dive** | "LangChain vs LangGraph vs LlamaIndex", "Ollama on bare metal vs Docker" |
 
-Voice: **first person as Kajaluxan**. Concise, opinionated, honest about
-trade-offs, drawing on real project experience where it fits. No emoji.
-Reference real metrics from his work where natural (MRR@5: 0.96,
-Recall@5: 0.99, MS SQL → PostgreSQL migration with 100+ tables, on-prem
-RAG with Qdrant + PostgreSQL hybrid).
+Each topic must:
 
-Length: **800-1500 words** per language version.
+- Be timely (last 1-3 months) or evergreen + currently relevant
+- Align with author expertise: RAG, vector DBs, LLM eval, hybrid search,
+  on-prem AI, legal-tech, Spring Boot, FastAPI, PostgreSQL
+- NOT duplicate existing posts
 
-Structure with H2 (`##`) sections, bullet lists, code fences for code.
-Use a real markdown table if useful for comparison.
+### Step 4 — Write each post (3 × 2 languages = 6 files)
 
-**MDX gotcha:** never use raw `<` or `>` characters outside code fences —
-the MDX parser interprets them as JSX. Always write "over 1M",
-"under 500k", "more than" etc.
+**Voice — this matters more than anything else.** Write like a tired but
+thoughtful engineer typing into a notes app at the end of a workday.
+The reader should not be able to tell this is AI-assisted.
 
-Write the post in **both languages**, not one translated literally —
-both should read naturally to a native speaker. Cover identical material
-but rephrase as needed.
+Anti-patterns that scream AI (ban them):
 
-### Step 4 — Save
+- Em-dashes (—). Use a normal dash (-), a colon, or just split into two sentences.
+- "In conclusion", "In essence", "Indeed", "Moreover", "Furthermore", "It's worth noting"
+- "Delve", "leverage", "navigate the complexities", "robust", "seamless", "streamline",
+  "in today's fast-paced", "the world of", "a game-changer", "unlock", "harness", "tapestry"
+- Symmetric three-item lists ("X, Y, and Z" used four times in a row)
+- The "It's not just X, it's Y" rhetorical move
+- Perfect parallel sentence structures throughout
+- Bullet lists with exactly 3-5 items every single time
+- Headings phrased as questions ("What is RAG?", "Why does it matter?")
 
-Generate a kebab-case ASCII slug (max 60 chars) from the topic. Then
-write exactly two files:
+Patterns that read human:
+
+- Contractions: "it's", "don't", "won't", "I've"
+- Short sentences mixed with longer ones. Some sentences fragments. Like this.
+- Specific numbers, dates, vendor names, version strings — not "many", "various", "several"
+- Concrete code snippets with realistic variable names
+- Asides in parentheses (kind of like this)
+- The occasional admission of uncertainty ("I'm not sure why this worked",
+  "this might be the wrong call, but...")
+- Personal pronouns: "I", "we", "you" — not "one" or "the developer"
+- Linking thoughts with "but", "though", "still", "anyway" rather than
+  "however", "nevertheless"
+
+**Mandatory structure for every post**:
+
+1. **TL;DR (2-3 lines)** at the very top after frontmatter — written as
+   if you're telling a colleague "here's the gist", not a marketing pitch
+2. **Body** in H2 (`##`) sections: 800-1500 words. Headings should be
+   statements or topics, not questions.
+3. **"Aus der Praxis" / "From my work"** section (H2): at least one of:
+   - A real metric from Kajaluxan's projects (MRR@5: 0.96, Recall@5: 0.99,
+     100+ table MS SQL to PostgreSQL migration, on-prem RAG with Qdrant +
+     PostgreSQL hybrid via RRF, semantic quality 87.2%)
+   - A concrete trade-off he encountered (chunk size, embedding choice,
+     timeouts, latency)
+   - A failure / lesson learned ("we tried X, abandoned because Y")
+   This section is the most important. It must contain something Claude
+   could not have guessed from training data.
+4. **Internal links**: link to at least 2 other posts on the site that
+   are topically related. Use `/de/blog/<slug>` or `/en/blog/<slug>`.
+5. **Honest closing** in the author's voice. Not "I hope this was helpful".
+   Something like "if you ran into the same thing, let me know" or just
+   end on the last technical point.
+
+**Hard rules**:
+
+- 800-1500 words per language version
+- First-person as Kajaluxan, German that reads natively in DE, English
+  that reads natively in EN (not literal translations)
+- Markdown only — no MDX components
+- NEVER raw `<` or `>` outside code fences (MDX-JSX trap). Use words
+  ("over 1M", "under 500k") or backticks
+- No emoji anywhere
+- No em-dashes (—) anywhere outside code
+- Code fences must have a language tag (```python, ```bash, etc.)
+
+### Step 5 — Frontmatter
+
+Each MDX file gets this frontmatter (replace all placeholders):
+
+```yaml
+---
+title: "Title under 65 chars — punchy, keyword-first"
+description: "130-160 char SEO description with the main keyword early"
+date: YYYY-MM-DD  # today's date
+tags: ["primary-topic", "secondary-topic", "format"]
+slug: kebab-case-slug
+aiAssisted: true
+format: tutorial | opinion | comparison  # one of these three
+---
+```
+
+`aiAssisted: true` lets the site render a small disclosure badge.
+Honesty signals (E-E-A-T) help, not hurt, with Google.
+
+### Step 6 — Filenames
+
+For each of the 3 topics, write **two** files:
 
 - `content/blog/<slug>.de.mdx`
 - `content/blog/<slug>.en.mdx`
 
-Each starts with this frontmatter (replace placeholders):
+The slug must be identical across the two language files of the same
+topic (hreflang depends on this).
 
-```yaml
----
-title: "Title under 65 chars"
-description: "130-160 character SEO description"
-date: YYYY-MM-DD  # today's date
-tags: ["RAG", "Tag2", "Tag3"]
-slug: same-slug-as-filename
----
-```
+### Step 7 — Commit & open one PR
 
-Verify the slug is identical in both files so hreflang works correctly.
+- Create branch `drafts/blog-YYYY-MM-DD` from `main`
+- Commit all 6 files (3 topics × 2 languages) with message
+  `draft: 3 blog posts — <topic1>, <topic2>, <topic3>`
+- Push and open ONE Pull Request titled
+  `📝 Daily blog drafts – YYYY-MM-DD (3 topics)`
+- PR body lists the 3 topics with one-line summaries and reminds the
+  reviewer to: read the "From my work" section of each post and replace
+  generic claims with real specifics from Kajaluxan's projects.
 
-### Step 5 — Commit & PR
+**Do not merge.** End the session.
 
-Create a new branch `drafts/blog-YYYY-MM-DD` from `main`, commit both
-files with message `draft: blog post – <short topic>`, push, and open a
-Pull Request targeting `main` with:
+### If something blocks you
 
-- **Title:** `📝 Blog draft – <topic>`
-- **Body:** brief summary of what was researched, why this topic is
-  timely, and a reminder that the human reviewer should add personal
-  insights before merging (Google E-E-A-T penalises pure AI content).
+- Web search unavailable → fall back to evergreen topics in the author's
+  expertise area, still 3 different formats
+- Can only write 1-2 quality posts (rest would be filler) → only commit
+  those, mention in PR body why fewer than 3
+- Existing posts cover most obvious topics → go deeper (e.g. specific
+  embedding model benchmarks, specific failure modes)
 
-**Do not merge the PR.** End the session.
-
-### Constraints
-
-- One post per run, regardless of how compelling other topics seem
-- If the chosen topic turns out to duplicate an existing post during
-  writing, abort and pick a different one
-- If web search is unavailable, fall back to evergreen topics in the
-  author's expertise area (still narrow + practical)
+Quality beats quantity. Drop a draft if it would be generic filler.

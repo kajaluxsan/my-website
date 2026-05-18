@@ -2,9 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { getAllSlugs, getPost } from "@/lib/posts";
+import { getAllSlugs, getPost, slugifyTag } from "@/lib/posts";
 import type { Lang } from "@/i18n/LanguageProvider";
 
 export async function generateStaticParams() {
@@ -130,19 +131,34 @@ export default async function BlogPost({
             {post.tags.length > 0 && (
               <div className="mt-6 flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
-                  <span
+                  <Link
                     key={tag}
-                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-medium text-white/65"
+                    href={`/${lang}/blog/tag/${slugifyTag(tag)}`}
+                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-medium text-white/65 transition-colors hover:border-accent/40 hover:text-accent-light"
                   >
                     {tag}
-                  </span>
+                  </Link>
                 ))}
+              </div>
+            )}
+            {post.aiAssisted && (
+              <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-brand-900/40 px-3 py-1 text-[11px] text-white/55">
+                <span
+                  aria-hidden
+                  className="h-1.5 w-1.5 rounded-full bg-accent-light"
+                />
+                {lang === "de"
+                  ? "KI-unterstützter Entwurf, von mir reviewt und ergänzt"
+                  : "AI-assisted draft, reviewed and edited by the author"}
               </div>
             )}
           </header>
 
           <div className="prose-blog">
-            <MDXRemote source={post.content} />
+            <MDXRemote
+              source={post.content}
+              options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+            />
           </div>
         </article>
       </main>
