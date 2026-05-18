@@ -1,12 +1,12 @@
 "use client";
 
+import { usePathname, useRouter } from "next/navigation";
 import {
   ReactNode,
   createContext,
   useCallback,
   useContext,
   useEffect,
-  useState,
 } from "react";
 
 export type Lang = "de" | "en";
@@ -19,50 +19,49 @@ type Ctx = {
 
 const LanguageContext = createContext<Ctx | null>(null);
 
-const STORAGE_KEY = "lang";
+export function LanguageProvider({
+  children,
+  initialLang,
+}: {
+  children: ReactNode;
+  initialLang: Lang;
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
 
-function detectInitialLang(): Lang {
-  if (typeof window === "undefined") return "de";
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (stored === "de" || stored === "en") return stored;
-  const nav = window.navigator.language?.toLowerCase() ?? "";
-  return nav.startsWith("en") ? "en" : "de";
-}
-
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("de");
-
+  // Persist the active locale in a cookie so middleware on the next visit
+  // hits the right /de or /en redirect without flicker.
   useEffect(() => {
-    // Always start at the top on refresh (browsers default to restoring the last
-    // scroll position, which is jarring on a single-page portfolio). Anchor
-    // links like /#projects still work because we skip the reset when a hash
-    // is present.
+    document.documentElement.lang = initialLang;
+    document.cookie = `lang=${initialLang}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
+  }, [initialLang]);
+
+  // Reset scroll on real refresh (not on locale switch).
+  useEffect(() => {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
     if (!window.location.hash) {
       window.scrollTo(0, 0);
     }
-
-    const initial = detectInitialLang();
-    setLangState(initial);
-    document.documentElement.lang = initial;
   }, []);
 
-  const setLang = useCallback((l: Lang) => {
-    setLangState(l);
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(STORAGE_KEY, l);
-      document.documentElement.lang = l;
-    }
-  }, []);
+  const setLang = useCallback(
+    (l: Lang) => {
+      if (l === initialLang) return;
+      const next = pathname.replace(/^\/(de|en)(?=\/|$)/, `/${l}`);
+      document.cookie = `lang=${l}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
+      router.push(next || `/${l}`);
+    },
+    [initialLang, pathname, router],
+  );
 
   const toggleLang = useCallback(() => {
-    setLang(lang === "de" ? "en" : "de");
-  }, [lang, setLang]);
+    setLang(initialLang === "de" ? "en" : "de");
+  }, [initialLang, setLang]);
 
   return (
-    <LanguageContext.Provider value={{ lang, setLang, toggleLang }}>
+    <LanguageContext.Provider value={{ lang: initialLang, setLang, toggleLang }}>
       {children}
     </LanguageContext.Provider>
   );

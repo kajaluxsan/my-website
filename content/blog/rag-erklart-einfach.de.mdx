@@ -1,0 +1,51 @@
+---
+title: "RAG einfach erklärt: wie LLMs auf deine Daten zugreifen"
+description: "Was Retrieval Augmented Generation ist, warum es funktioniert und wann du es einsetzen solltest – aus der Praxis."
+date: 2026-05-18
+tags: ["RAG", "LLM", "AI", "Tutorial"]
+slug: rag-erklart-einfach
+---
+
+LLMs wie GPT-4 oder Claude wissen viel – aber sie wissen nichts über **deine** Dokumente, deinen Code, dein Wiki. Genau hier kommt **Retrieval Augmented Generation (RAG)** ins Spiel.
+
+## Was ist RAG?
+
+RAG ist ein einfaches Muster: **vor** der LLM-Anfrage holst du relevante Stücke aus deinen eigenen Daten und fügst sie dem Prompt bei. Das LLM antwortet dann auf Basis dieser Stücke statt nur aus seinem Pretraining.
+
+Die Pipeline besteht aus drei Schritten:
+
+1. **Indexierung** – Dokumente in kleine Chunks zerlegen, Embeddings berechnen, in einer Vector-DB speichern
+2. **Retrieval** – Bei einer Nutzerfrage die ähnlichsten Chunks aus der DB holen
+3. **Generation** – Die Chunks zusammen mit der Frage an das LLM schicken
+
+## Warum funktioniert das?
+
+Der Trick: Embeddings übersetzen Text in einen Vektor, der die Bedeutung kodiert. Zwei Texte mit ähnlicher Bedeutung haben ähnliche Vektoren – auch wenn die Wörter anders sind. So findest du "Wie kündige ich mein Abo?" durch eine Frage wie "Vertrag beenden".
+
+## Wann RAG einsetzen?
+
+- Wenn dein LLM auf **interne Daten** zugreifen soll, die nicht im Pretraining waren
+- Wenn die Antworten **belegbar** sein müssen (du kannst Quellen anzeigen)
+- Wenn die Daten **regelmäßig aktualisiert** werden (Re-Training wäre zu teuer)
+- Wenn die Datenmenge **zu gross für den Context-Window** ist
+
+## Wann nicht?
+
+- Bei kleinen, statischen Datensets, die komplett in den Context passen
+- Wenn du deterministische Antworten brauchst (LLMs halluzinieren auch mit Context)
+- Wenn die Latenz extrem niedrig sein muss (RAG kostet 100-500ms extra für Retrieval)
+
+## Praxis-Hinweis aus meinen Projekten
+
+Bei einem on-premise RAG-System für die juristische Domäne haben wir mit **hybrider Suche** (Vector + BM25 via Reciprocal Rank Fusion) **MRR@5: 0.96** erreicht. Reines Vector-Retrieval lag deutlich darunter. Lektion: kombiniere semantische und lexikalische Suche, gerade in spezialisierten Domänen mit Fachbegriffen.
+
+## Nächste Schritte
+
+In den nächsten Posts gehe ich auf konkrete Komponenten ein:
+
+- Chunking-Strategien
+- Embedding-Modelle vergleichen
+- Hybrid Search mit RRF
+- LLM-Evaluation mit MRR@5 und Recall@5
+
+Wenn du Fragen oder eigene Erfahrungen hast – schreib mir gern eine Mail.

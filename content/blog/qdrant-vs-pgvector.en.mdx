@@ -1,0 +1,66 @@
+---
+title: "Qdrant vs. pgvector: which vector DB should you pick for RAG?"
+description: "A sober comparison of Qdrant and PostgreSQL pgvector – performance, setup, scaling and when each one fits best."
+date: 2026-05-18
+tags: ["Qdrant", "pgvector", "PostgreSQL", "Vector Database", "RAG"]
+slug: qdrant-vs-pgvector
+---
+
+Building a RAG system you hit an early question: **dedicated vector DB** like Qdrant, or just **PostgreSQL with pgvector**? Both work — but they have very different strengths.
+
+## Quick comparison
+
+| Aspect | Qdrant | pgvector |
+|---|---|---|
+| Setup effort | Separate container | Postgres extension |
+| Performance above 1M vectors | Excellent | OK with IVFFlat/HNSW |
+| Metadata filtering | Very fast (payload index) | Flexible via SQL, slower |
+| Hybrid search (vector + BM25) | Built-in | Manual via tsvector |
+| Pure vector operations | Optimised | Bolted onto Postgres |
+| Backups / replication | Own mechanisms | Standard Postgres tooling |
+| Ops cost | A second DB | Just Postgres |
+
+## When Qdrant?
+
+- You need **fast retrieval at 5M plus vectors**
+- You use complex **payload filters** (e.g. `lang=en AND date>2025`)
+- You want **hybrid search out of the box**
+- You build an **AI-native product** where vector search is core
+
+## When pgvector?
+
+- You **already run Postgres** and want to avoid a second DB
+- Dataset is **under 1M vectors**
+- Your ops team knows Postgres but not Qdrant
+- You need **transactional consistency** between vectors and metadata
+
+## A performance note from real projects
+
+In a project with ~750k legal document chunks, both DBs delivered comparable latencies under 50ms in our setup. The **real bottleneck** was not the DB, it was:
+
+1. **Embedding model** (small vs. large model)
+2. **Chunk size** (200 vs. 800 tokens)
+3. **Hybrid strategy** (RRF with BM25 gave +15% Recall@5)
+
+## Hybrid search with RRF
+
+In production we combine vector search with BM25 via Reciprocal Rank Fusion:
+
+```python
+def rrf(results_lists, k=60):
+    scores = {}
+    for results in results_lists:
+        for rank, doc_id in enumerate(results):
+            scores[doc_id] = scores.get(doc_id, 0) + 1 / (k + rank)
+    return sorted(scores.items(), key=lambda x: -x[1])
+```
+
+In Qdrant this is built in (`prefetch` + fusion). With pgvector you have to run `tsvector` search and vector search separately and fuse the results yourself.
+
+## Recommendation
+
+- **Prototype & under 500k vectors**: pgvector – simpler, one less DB
+- **Production & over 1M vectors + complex filters**: Qdrant
+- **Hybrid search is critical**: Qdrant
+
+Both are solid. The DB is rarely the bottleneck — embedding model, chunking and retrieval strategy matter more.
