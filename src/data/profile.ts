@@ -66,9 +66,11 @@ export const profile = {
   avatarImage: "/images/profile-avatar.webp" as string | null,
   contact: {
     email: "kajaluxan@mathitharan.ch",
-    phone: "+41 77 467 01 32",
-    address: "Schlieackerstrasse 10, 8422 Pfungen",
-    linkedin: "https://www.linkedin.com/in/kajaluxan-mathitharan/",
+    location: {
+      de: "Winterthur, Schweiz",
+      en: "Winterthur, Switzerland",
+    } satisfies L,
+    linkedin: "https://www.linkedin.com/in/kajaluxan-mathitharan-031648264",
     github: "https://github.com/kajaluxsan",
   },
 };
