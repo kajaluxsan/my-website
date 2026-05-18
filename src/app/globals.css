@@ -26,7 +26,7 @@
   }
 
   ::selection {
-    background-color: rgb(168 85 247 / 0.4);
+    background-color: rgb(106 55 119 / 0.5);
     color: white;
   }
 }
@@ -42,7 +42,7 @@
 
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(110deg, #ffffff 30%, #c084fc 60%, #ffffff 90%);
+    background-image: linear-gradient(110deg, #ffffff 30%, #9c5fb0 60%, #ffffff 90%);
     background-size: 200% auto;
     animation: gradient 8s linear infinite;
   }
@@ -63,14 +63,14 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgb(13 7 25);
+  background: rgb(12 6 16);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(69 18 153);
+  background: rgb(61 29 71);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(125 49 245);
+  background: rgb(106 55 119);
 }
