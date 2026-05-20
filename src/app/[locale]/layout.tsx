@@ -77,10 +77,9 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={inter.variable}>
       <head>
-        {/* Pre-warm the connection to Vercel's image and font CDNs and
-            our own analytics endpoint so the first byte of those
-            requests starts sooner. Cheap; saves 50-200 ms per asset. */}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        {/* DNS warmup for the analytics endpoints so the first beacon
+            doesn't pay the full TLS handshake cost. Inter is self-hosted
+            by next/font so no fonts.gstatic.com preconnect needed. */}
         <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
         {/* Preload the avatar image — it's the first paint above the fold. */}
