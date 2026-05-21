@@ -76,6 +76,15 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={inter.variable}>
+      <head>
+        {/* DNS warmup for the analytics endpoints so the first beacon
+            doesn't pay the full TLS handshake cost. Inter is self-hosted
+            by next/font so no fonts.gstatic.com preconnect needed. */}
+        <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
+        <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
+        {/* Preload the avatar image — it's the first paint above the fold. */}
+        <link rel="preload" as="image" href="/images/profile-avatar.webp" fetchPriority="high" />
+      </head>
       <body className="min-h-screen font-sans antialiased">
         <LanguageProvider initialLang={locale as Lang}>
           {children}
