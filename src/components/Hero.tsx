@@ -20,11 +20,6 @@ export default function Hero() {
 
       <div className="container-wide grid items-center gap-12 lg:grid-cols-[1.6fr_1fr]">
         <div className="animate-fade-in-up">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-brand-900/60 px-4 py-1.5 text-xs font-medium text-white/70">
-            <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)]" />
-            {ui.hero.available[lang]}
-          </div>
-
           <h1 className="text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-white">
             {profile.name}
           </h1>
